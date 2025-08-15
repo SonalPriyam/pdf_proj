@@ -21,7 +21,7 @@ from PIL import Image, ImageDraw
 
 from langchain.llms import HuggingFaceHub
 
-token = os.environ.get("HHUGGINGFACEHUB_API_TOKEN") 
+ 
 
 # PDF rendering & word bboxes
 import fitz  # PyMuPDF
@@ -204,7 +204,8 @@ with st.sidebar:
 # ================ Initialize LLM (local) & TF-IDF ================
 llm = HuggingFaceHub(
     repo_id="google/flan-t5-small",  # or any other Hugging Face model 
-    model_kwargs={"temperature": 0.2, "max_new_tokens": 512}
+    model_kwargs={"temperature": 0.2, "max_new_tokens": 512},
+     task="text2text-generation"
 )
 
 # TF-IDF store helpers
