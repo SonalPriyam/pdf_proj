@@ -19,13 +19,15 @@ import streamlit as st
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw
 
+from langchain.llms import HuggingFaceHub
+
 token = os.environ.get("HHUGGINGFACEHUB_API_TOKEN") 
 
 # PDF rendering & word bboxes
 import fitz  # PyMuPDF
 
 # Local LLM (langchain wrapper around local LlamaCpp)
-from langchain_community.llms import LlamaCpp
+
 
 # Document loading & splitting (local)
 from langchain_community.document_loaders import PyPDFLoader
@@ -200,8 +202,10 @@ with st.sidebar:
     st.caption("Role affects the tone & structure of answers.")
 
 # ================ Initialize LLM (local) & TF-IDF ================
-# Local LLaMA (user must have a local GGML model file)
-llm = LlamaCpp(model_path="./tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf", n_ctx=2048, temperature=0.2)
+llm = HuggingFaceHub(
+    repo_id="google/flan-t5-small",  # or any other Hugging Face model 
+    model_kwargs={"temperature": 0.2, "max_new_tokens": 512}
+)
 
 # TF-IDF store helpers
 TFIDF_VECT_FILE = os.path.join(DB_DIR, "tfidf_vectorizer.joblib")
