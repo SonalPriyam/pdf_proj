@@ -19,6 +19,8 @@ import streamlit as st
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw
 
+token = os.environ.get("HHUGGINGFACEHUB_API_TOKEN") 
+
 # PDF rendering & word bboxes
 import fitz  # PyMuPDF
 
